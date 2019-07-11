@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="run" name="ant test">
+    <target name="run" depends="compile">  
+    </target>
+    <target name="compile">
+        <javac srcdir = "./" destdir=""/>
+    </target>
+    <target name = "clean">
+        <delete>
+        <fileset dir="./" includes="*.class"/>
+        </delete>   
+   </target> 
+</project>
