@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="run" name="ant test">
-    <target name="run" depends="compile">  
+<project default="compile" name="ant test" basedir=".">
+
+    <path id="classpath">
+        <fileset dir="./lib" includes="*.jar"/>
+    </path>
+
+    <target name="run" depends="compile">
+        <java jar="./jar/Hello.jar" fork="true"/>  
     </target>
+
     <target name="compile">
-        <javac srcdir = "./" destdir=""/>
+        <mkdir dir="./classes"/>
+        <javac srcdir="./src"  destdir="./classes" classpathref="classpath"/>
+       
     </target>
+
     <target name = "clean">
+        <delete dir="classes"/>
+        <delete dir="jar"/>
+        <!-->
         <delete>
-        <fileset dir="./" includes="*.class"/>
-        </delete>   
-   </target> 
+            <fileset dir="./classes" includes="*.class"/>
+        </delete> 
+        </!-->  
+    </target>
+
+
+    <target name="jar" depends="compile">
+        <mkdir dir="./jar"/>
+        <jar destfile="./jar/All.jar" basedir="./classes">
+            <manifest>
+                <attribute name="Main-Class" value="Hello"/>
+                <attribute name="Add-Class" value="Add"/>
+                <attribute name="Test-Class" value="AddTest"/>
+            </manifest> 
+        </jar>
+    </target>
+
+<target name="test" depends="compile">
+
+</target>
+
+<!-->
+<target name="junit" depends="compile">
+    <junit printsummary="on">
+        <test name="add test"/>
+        <taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+            <classpath>
+                <pathelement location = "./lib/ant-junit-1.6.4.jar"/>
+                <pathelement location = "./lib/junit.jar"/>
+            </classpath>
+        </taskdef>
+        <batchtest fork ="yes">
+            <fileset dir="./src" includes="./*Test.java"/>
+        </batchtest>
+    </junit>
+</target>
+</!-->
+ 
 </project>
