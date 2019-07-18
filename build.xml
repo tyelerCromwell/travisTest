@@ -2,9 +2,21 @@
 <project default="compile" name="ant test" basedir=".">
 
     <path id="classpath">
-        <fileset dir="./lib" includes="*.jar"/>
+        <fileset dir="." includes="junit-4.10.jar"/>
     </path>
-
+    
+    <path id="jars">
+        <fileset dir="./.ant/lib" includes="*.jar"/>
+    </path>
+<!-->
+    <taskdef name="junitFile" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+        <classpath>
+            <pathelement location = "./lib/ant-junit-1.6.4.jar"/>
+            <pathelement location = "./lib/junit.jar"/>
+        </classpath>
+    </taskdef>
+</!-->
+   
     <target name="run" depends="compile">
         <java jar="./jar/Hello.jar" fork="true"/>  
     </target>
@@ -37,25 +49,16 @@
         </jar>
     </target>
 
-<target name="test" depends="compile">
-
+    
+<target name="test" depends="compile"> 
+    <java fork="true" dir="./src" classname="org.junit.runner.JUnitCore">
+        <arg value="AddTest.java"/>
+        <classpath>
+            <path location="./src"/>
+            <path location="./junit-4.10.jar"/>
+        </classpath>
+    </java>
 </target>
 
-<!-->
-<target name="junit" depends="compile">
-    <junit printsummary="on">
-        <test name="add test"/>
-        <taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
-            <classpath>
-                <pathelement location = "./lib/ant-junit-1.6.4.jar"/>
-                <pathelement location = "./lib/junit.jar"/>
-            </classpath>
-        </taskdef>
-        <batchtest fork ="yes">
-            <fileset dir="./src" includes="./*Test.java"/>
-        </batchtest>
-    </junit>
-</target>
-</!-->
  
 </project>

@@ -1,25 +1,22 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class AddTest {
-    
-    Add a;
-   
-    @BeforeEach
-    public void init() {
-        a = new Add();
-    }
-
+  
     @Test
     public void test1() {
-        int sum = a.add(1,2);
-        assertEquals(3, sum);
+        int sum = Add.add(1,2);
+        if (sum != 3)
+            fail("Wrong, the correct output should be 3 but it was " + sum);
+       // assertEquals(3, sum);
     }
 
     @Test
-    public void test2() {
-        int sum = a.add(4,5);
-        assertEquals(9, sum);
-    }
+        public void test2() {
+            int sum = Add.add(4,5);
+            // assertEquals(9, sum);
+            fail("Wrong, the correct output should be 3 but it was " + sum);
+
+        }
 
 }
